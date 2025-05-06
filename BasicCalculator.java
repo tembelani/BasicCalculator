@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**This basic calculator program performs 
 additon, subtraction, multiplication, and division operations.
 */
@@ -52,30 +54,76 @@ public class BasicCalculator {
         return this.firstNumber / this.secondNumber;
     }
 
+    
+
     //The main method to test the calculator of the program
     //This method creates an instance of the BasicCalculator class, sets the numbers, and performs calculations.
     public static void main(String[] args) {
-        // Create calculator instance
+        Scanner scanner = new Scanner(System.in);
         BasicCalculator calculator = new BasicCalculator();
         
-        // Set numbers for calculation
-        calculator.setFirstNumber(10.5);
-        calculator.setSecondNumber(5.2);
-        
-        // Perform and display calculations
-        System.out.println("Basic Calculator Operations:");
-        System.out.println("Addition: " + calculator.add());
-        System.out.println("Subtraction: " + calculator.subtract());
-        System.out.println("Multiplication: " + calculator.multiply());
+        System.out.println("You're now using the Basic Calculator!");
+        System.out.println("----------------------------");
+    
+        // Get first & second number from user
+        System.out.print("Enter first number: ");
+        double num1 = scanner.nextDouble();
+        calculator.setFirstNumber(num1);
 
-        // Handle division by zero exception
-         System.out.println("Division: " + calculator.divide());
-         calculator.setSecondNumber(0); // Set second number to zero for testing exception
-         System.out.println("Attempting division by zero...");
-        try {
-            System.out.println("Division: " + calculator.divide());
-        } catch (ArithmeticException e) {
-            System.out.println("Error: " + e.getMessage());
+        System.out.print("Enter second number: ");
+        double num2 = scanner.nextDouble();
+        calculator.setSecondNumber(num2);
+        
+        // Perform calculations
+        System.out.println("\nSelect an operation:");
+        System.out.println("1. Addition (+)");
+        System.out.println("2. Subtraction (-)");
+        System.out.println("3. Multiplication (*)");
+        System.out.println("4. Division (/)");
+        System.out.print("Enter your choice (1-4): ");
+
+        int choice = scanner.nextInt();
+        double result = 0;
+        
+
+        try{
+            switch(choice) {
+                case 1: // Addition
+                result = calculator.add();
+                break;
+            
+                case 2: // Subtraction
+                result = calculator.subtract();
+                break;
+
+                case 3: // Multiplication
+                result = calculator.multiply();
+                break;
+
+                case 4: // Division
+                    try{
+                        result = calculator.divide();
+
+                    }
+                    catch (ArithmeticException e){  
+                        System.out.println("\nError: " + e.getMessage());
+                        return;
+                    }
+                    break;
+                
+                default:
+                System.out.println("Invalid choice! Please select a valid operation.");
+                
+                return;
+            }
+
+            System.out.println("Result: " + result);
+
+        }
+        finally{
+            // Close the scanner to prevent resource leaks
+            scanner.close();
+
         }
     }
 }
